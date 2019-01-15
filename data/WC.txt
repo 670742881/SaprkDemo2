@@ -1,0 +1,3 @@
+hadoop hive java bigdata scala
+hbase spark linux json hue kafka
+oozie zookeeper storm sparkstreaming
