@@ -35,7 +35,7 @@ object SxRlStatDemo extends Serializable {
     // auto.offset.reset：给定consumer的偏移量的值，largest表示设置为最大值，smallest表示设置为最小值(最大值&最小值指的是对应的分区中的日志数据的偏移量的值) ==> 每次启动都生效
     val kafkaParams = Map[String, String](
       "metadata.broker.list" -> "hadoop04:9092,hadoop05:9092,hadoop06:9092",
-      "auto.offset.reset" -> "smallest",
+      "auto.offset.reset" -> "largest",
       "key.serializer" -> "org.apache.kafka.common.serialization.StringSerializer",
       "value.serializer" -> "org.apache.kafka.common.serialization.StringSerializer")
     //      "spark.serializer"->"org.apache.spark.serializer.KryoSerializer")
@@ -50,6 +50,7 @@ object SxRlStatDemo extends Serializable {
       rdd.map(log => {
         var map: Map[String, String] = new HashMap[String, String]
         val splits = log.split("\\^A")
+        if (splits.length==3){
         val ip = splits(0).trim
         val nginxTime = TimeUtil.parseNginxServerTime2Long(splits(1).trim).toString;
         if (nginxTime != "-1") {
@@ -72,7 +73,7 @@ object SxRlStatDemo extends Serializable {
             map.+=(key -> value)
           }
           map.+=("ip" -> ip, "s_time" -> nginxTime, "country" -> areaInfo(0), "provence" -> areaInfo(1), "city" -> areaInfo(2))
-
+        }else{ logger.debug("次日志无法解析")}
         }
         map
       })
@@ -80,7 +81,7 @@ object SxRlStatDemo extends Serializable {
     })
     stream.cache()
     ssc.checkpoint("checkpoint")
-    val bc_personAmt = stream.filter(log => log("en") == "e_sx")
+    val bc_personAmt = stream.filter(log => log.contains("en") && log("en") == "e_sx")
       // combine_map.get("test_101").getOrElse("不存在") //根据key取value值,如果不存在返回后面的值
       //  scala> a.get(1)
       // res0: Option[Int] = Some(2) get返回的是Option[Int]类型 不可能等于" " ==Some("e_la")
@@ -93,7 +94,7 @@ object SxRlStatDemo extends Serializable {
       Some(currentValue + preValue)
     })
 
-    val areaStartAmt: DStream[(String, Long)] = stream.filter(log => log("en") != null && log.get("en") != null)
+    val areaStartAmt: DStream[(String, Long)] = stream.filter(log => log.contains("en")  && log.get("en") != null)
       .map(log => (log("country") + "_" + log("provence") + "_" + TimeUtil.parseLong2String(log("s_time").toLong), 1))
       .updateStateByKey((seq: Seq[Int], state: Option[Long]) => {
         //seq:Seq[Long] 当前批次中每个相同key的value组成的Seq
@@ -213,8 +214,8 @@ object SxRlStatDemo extends Serializable {
               println("更新失败")
             }
             else {
-              println("更新成功")
-            }
+//              println("更新成功")
+         }
 
             //                      if (result.next()) {
             //                        val date = result.getString("date")

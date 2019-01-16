@@ -2,7 +2,7 @@ package com.spark.demo
 
 import java.util
 
-import org.apache.derby.impl.sql.compile.TableName
+
 import org.apache.hadoop.hbase.client._
 import org.apache.hadoop.hbase.util.Bytes
 import org.apache.hadoop.hbase._

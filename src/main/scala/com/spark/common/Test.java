@@ -41,8 +41,8 @@ public class Test {
         // 城市库
         City city ;
         try {
-            city = new City("/opt/17monipdb.datx");
-         //   city = new City("E:\\myproject\\SaprkTest\\src\\ipData\\17monipdb.datx");
+           // city = new City("/opt/17monipdb.datx");
+          city = new City("E:/myproject/SaprkDemo2/src/ipData/17monipdb.datx");
          // city = new City("E:\\myproject\\datx-java\\data\\17monipdb.datx");
             if (city != null) {
                 //city = new City("/opt/softs/17monipdb.datx");

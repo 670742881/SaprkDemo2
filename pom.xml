@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.spark.demo</groupId>
-  <artifactId>SaprkTest</artifactId>
+  <artifactId>SparkTest</artifactId>
   <version>1.0-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
   <properties>
@@ -10,15 +10,16 @@
 
   <repositories>
     <repository>
-      <id>Central Repository</id>
-      <url>	http://central.maven.org/maven2/</url>
+      <id>localResp</id>
+      <name>wondertek mobileVideo</name>
+      <url>http://192.168.110.38:8080/mvn/repository</url>
     </repository>
     <repository>
       <id>aliyun</id>
       <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
     </repository>
     <repository>
-      <id>Central Repository2</id>
+      <id>Central Repository</id>
       <url>	http://central.maven.org/maven2/</url>
     </repository>
 
@@ -59,11 +60,7 @@
       <artifactId>spark-mllib_2.11</artifactId>
       <version>2.2.1</version>
     </dependency>
-    <dependency>
-      <groupId>org.apache.hadoop</groupId>
-      <artifactId>hadoop-client</artifactId>
-      <version> 2.6.0-cdh5.12.0</version>
-    </dependency>
+
 
     <!-- Spark-hive -->
     <dependency>
@@ -102,11 +99,15 @@
     <!--<dependency>-->
 
     <!--</dependency>-->
-
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-client</artifactId>
+      <version> 2.7.6</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase-client</artifactId>
-      <version>1.2.0-cdh5.12.0</version>
+      <version> 2.1.2</version>
     </dependency>
 
   </dependencies>
