@@ -1,13 +1,13 @@
 ----------------------------------------------------------------
-Sun Jan 13 14:48:35 CST 2019:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0168-45f8-1d59-000006106da8 
-on database directory E:\myproject\SaprkTest\metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@96a75da 
-Loaded from file:/E:/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
+Tue Jan 29 16:50:44 CST 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-0168-98cd-b331-00000f2d3c00 
+on database directory E:\MyProject\SaprkDemo\metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@23592946 
+Loaded from file:/C:/Users/imp/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_191-b12
-user.dir=E:\myproject\SaprkTest
-os.name=Windows 7
+java.runtime.version=1.8.0_112-b15
+user.dir=E:\MyProject\SaprkDemo
+os.name=Windows 10
 os.arch=amd64
-os.version=6.1
+os.version=10.0
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''

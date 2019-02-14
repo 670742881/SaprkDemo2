@@ -2,18 +2,19 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.spark.demo</groupId>
   <artifactId>SparkTest</artifactId>
+  <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
   <properties>
-    <scala.version>2.11.12</scala.version>
+    <scala.version>2.11.8</scala.version>
   </properties>
 
   <repositories>
-    <repository>
-      <id>localResp</id>
-      <name>wondertek mobileVideo</name>
-      <url>http://192.168.110.38:8080/mvn/repository</url>
-    </repository>
+    <!--<repository>-->
+      <!--<id>localResp</id>-->
+      <!--<name>wondertek mobileVideo</name>-->
+      <!--<url>http://192.168.110.38:8080/mvn/repository</url>-->
+    <!--</repository>-->
     <repository>
       <id>aliyun</id>
       <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
@@ -35,10 +36,11 @@
   </pluginRepositories>
 
   <dependencies>
+
       <dependency>
           <groupId>org.scala-lang</groupId>
           <artifactId>scala-library</artifactId>
-          <version>${scala.version}</version>
+          <version> 2.11.6</version>
       </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
@@ -107,13 +109,30 @@
     <dependency>
       <groupId>org.apache.hbase</groupId>
       <artifactId>hbase-client</artifactId>
-      <version> 2.1.2</version>
+      <version> 1.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.hadoop</groupId>
+      <artifactId>hadoop-common</artifactId>
+      <version>2.7.6</version>
     </dependency>
 
   </dependencies>
 
 
   <build>
+    <resources>
+      <!--<resource>-->
+        <!--<directory>${basedir}/src/main/java</directory>-->
+        <!--<includes>-->
+          <!--<include>**/*.properties</include>-->
+          <!--<include>**/*.xml</include>-->
+        <!--</includes>-->
+    <!--</resource>-->
+      <resource>
+        <directory>src/main/Resource</directory>
+      </resource>
+    </resources>
     <sourceDirectory>src/main/scala</sourceDirectory>
     <plugins>
       <plugin>
@@ -151,51 +170,51 @@
           <!--</includes>-->
         <!--</configuration>-->
       <!--</plugin>-->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version> 2.1</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <filters>
-                <filter>
-                  <artifact>*:*</artifact>
-                  <excludes>
-                    <exclude>META-INF/*.SF</exclude>
-                    <exclude>META-INF/*.DSA</exclude>
-                    <exclude>META-INF/*.RSA</exclude>
-                  </excludes>
-                </filter>
-              </filters>
-              <transformers>
-                <transformer
-                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>com.spark.demo.UserIdAnalyze</mainClass>
-                </transformer>
-                <transformer
-                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                  <resource>META-INF/spring.handlers</resource>
-                </transformer>
-                <transformer
-                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
-                  <resource>META-INF/spring.schemas</resource>
-                </transformer>
-              </transformers>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+      <!--<plugin>-->
+        <!--<groupId>org.apache.maven.plugins</groupId>-->
+        <!--<artifactId>maven-shade-plugin</artifactId>-->
+        <!--<version> 2.1</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<phase>package</phase>-->
+            <!--<goals>-->
+              <!--<goal>shade</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+              <!--<filters>-->
+                <!--<filter>-->
+                  <!--<artifact>*:*</artifact>-->
+                  <!--<excludes>-->
+                    <!--<exclude>META-INF/*.SF</exclude>-->
+                    <!--<exclude>META-INF/*.DSA</exclude>-->
+                    <!--<exclude>META-INF/*.RSA</exclude>-->
+                  <!--</excludes>-->
+                <!--</filter>-->
+              <!--</filters>-->
+              <!--<transformers>-->
+                <!--<transformer-->
+                        <!--implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+                  <!--<mainClass>com.spark.demo.UserIdAnalyze</mainClass>-->
+                <!--</transformer>-->
+                <!--<transformer-->
+                        <!--implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+                  <!--<resource>META-INF/spring.handlers</resource>-->
+                <!--</transformer>-->
+                <!--<transformer-->
+                        <!--implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+                  <!--<resource>META-INF/spring.schemas</resource>-->
+                <!--</transformer>-->
+              <!--</transformers>-->
+            <!--</configuration>-->
+          <!--</execution>-->
+        <!--</executions>-->
+      <!--</plugin>-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <source>7</source>
-          <target>7</target>
+          <source>8</source>
+          <target>8</target>
         </configuration>
       </plugin>
     </plugins>

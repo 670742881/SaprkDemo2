@@ -6,7 +6,7 @@ import org.apache.spark.streaming.kafka.KafkaUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
-class SparkSqlDemo {
+object SparkSqlDemo {
   def main(args: Array[String]): Unit = {
     //    val sprkConf=new SparkConf()
     //    sprkConf.setAppName(this.getClass.getSimpleName)

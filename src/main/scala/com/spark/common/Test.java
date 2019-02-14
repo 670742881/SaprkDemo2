@@ -5,10 +5,10 @@ import java.util.Arrays;
 
 
 public class Test {
-    public static void main(String[] args) throws IPv4FormatException {
+    public static void main(String[] args) {
         City city = null;
         try {
-            city = new City("E:\\myproject\\SaprkTest\\src\\ipData\\17monipdb.datx");
+            city = new City("E:\\MyProject\\SaprkDemo\\src\\ipData\\17monipdb.datx");
             String[] a = city.find("117.36.172.147");
             System.out.println(a[0]);
             System.out.println(a[1]);
@@ -20,7 +20,7 @@ public class Test {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        ; // 城市库
+        // 城市库
 //      System.out.println(Arrays.toString(city.find("116.247.102.210")));
 //      System.out.println(Arrays.toString(city.find("255.255.255.255")));
 //      System.out.println(Arrays.toString(city.find("219.136.134.157")));
@@ -28,11 +28,11 @@ public class Test {
 //      System.out.println(Arrays.toString(city.find("114.61.94.253")));
 //      System.out.println(Arrays.toString(city.find("39.182.209.13")));
 //     System.out.println(Arrays.toString(city.find("10.20.3.169")));
-        String[] a = getInfo("");
+//        String[] a = getInfo("");
 
         System.out.println(Arrays.toString(getInfo("10.20.3.169")));
-        System.out.println(Arrays.toString(getInfo("10.20.3.169")));
-        System.out.println(Arrays.toString(a));
+        System.out.println(Arrays.toString(getInfo("10.20.3.171")));
+//        System.out.println(Arrays.toString(a));
     }
 
 
@@ -42,7 +42,7 @@ public class Test {
         City city ;
         try {
            // city = new City("/opt/17monipdb.datx");
-          city = new City("E:/myproject/SaprkDemo2/src/ipData/17monipdb.datx");
+          city = new City("E:\\MyProject\\SaprkDemo\\src\\ipData\\17monipdb.datx");
          // city = new City("E:\\myproject\\datx-java\\data\\17monipdb.datx");
             if (city != null) {
                 //city = new City("/opt/softs/17monipdb.datx");
@@ -61,7 +61,7 @@ public class Test {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (IPv4FormatException e) {
-            e.printStackTrace();
+            System.out.println(ip+"无法解析");
         }
         return new String[]{"unknow", "unknow", "unknow"};
 

@@ -9,5 +9,9 @@
         <module name="SaprkTest" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="web-stat" target="1.8" />
+      <module name="webstat" target="7" />
+    </bytecodeTargetLevel>
   </component>
 </project>

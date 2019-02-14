@@ -128,9 +128,9 @@ object SxRlStatDemo extends Serializable {
 
 
         val hbaseConf = HBaseConfiguration.create()
-        //        hbaseConf.set("hbase.rootdir", "hdfs://hadoop01:9000/hbase")
-        //        hbaseConf.set("hbase.zookeeper.quorum", "hadoop01:2181,hadoop02:2181,hadoop03:2181")
-        hbaseConf.addResource("hbase-site.xml")
+                hbaseConf.set("hbase.rootdir", "hdfs://hadoop01:9000/hbase")
+                hbaseConf.set("hbase.zookeeper.quorum", "hadoop01:2181,hadoop02:2181,hadoop03:2181")
+       // hbaseConf.addResource("hbase-site.xml")
         val connection = ConnectionFactory.createConnection(hbaseConf)
         // val admin=connection.getAdmin;
         val table = connection.getTable(TableName.valueOf("test1"));
@@ -147,8 +147,11 @@ object SxRlStatDemo extends Serializable {
 
             put.addColumn(Bytes.toBytes("info"), Bytes.toBytes("accountNum"), Bytes.toBytes(String.valueOf(record._2)))
             table.put(put)
+
           })
+          connection.close()
         }
+
       })
       //   HbaseUtil.scanDataFromHabse(table)
     })

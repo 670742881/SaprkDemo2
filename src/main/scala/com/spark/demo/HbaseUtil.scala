@@ -2,10 +2,10 @@ package com.spark.demo
 
 import java.util
 
-
+import org.apache.hadoop.hbase.{Cell, HBaseConfiguration, HColumnDescriptor, HTableDescriptor, TableName}
 import org.apache.hadoop.hbase.client._
 import org.apache.hadoop.hbase.util.Bytes
-import org.apache.hadoop.hbase._
+
 
 object HbaseUtil extends  Serializable {
   val hbaseConf=HBaseConfiguration.create()
