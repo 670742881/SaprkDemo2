@@ -4,8 +4,6 @@
 //import kafka.message.MessageAndMetadata
 //import kafka.serializer.StringDecoder
 //import org.apache.spark.streaming.dstream.DStream
-//import org.apache.spark.streaming.kafka.KafkaUtils
-//import org.apache.spark.streaming.kafka010.KafkaUtils
 //import org.apache.spark.streaming.{Seconds, StreamingContext}
 //import org.apache.spark.{SparkConf, SparkContext}
 //
@@ -47,7 +45,7 @@
 //    }
 //
 //    // 构建DStream
-//    val dstream: DStream[String] = KafkaUtilsa.createDirectStream[String, String, StringDecoder, StringDecoder, String](ssc, kafkaParams, fromOffsets, messageHandler)
+//    val dstream: DStream[String] = KafkaUtil.createDirectStream[String, String, StringDecoder, StringDecoder, String](ssc, kafkaParams, fromOffsets, messageHandler)
 //
 //
 //    // 三、DStream的数据处理

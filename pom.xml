@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.spark.demo</groupId>
-  <artifactId>SparkTest</artifactId>
+  <artifactId>SparkDemo</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <inceptionYear>2008</inceptionYear>
@@ -121,18 +121,18 @@
 
 
   <build>
-    <resources>
+    <!--<resources>-->
       <!--<resource>-->
-        <!--<directory>${basedir}/src/main/java</directory>-->
+        <!--<directory>src/main/resources</directory>-->
         <!--<includes>-->
           <!--<include>**/*.properties</include>-->
           <!--<include>**/*.xml</include>-->
         <!--</includes>-->
     <!--</resource>-->
-      <resource>
-        <directory>src/main/Resource</directory>
-      </resource>
-    </resources>
+      <!--&lt;!&ndash;<resource>&ndash;&gt;-->
+      <!--&lt;!&ndash;<directory>src/main/Resource</directory>&ndash;&gt;-->
+    <!--&lt;!&ndash;</resource>&ndash;&gt;-->
+    <!--</resources>-->
     <sourceDirectory>src/main/scala</sourceDirectory>
     <plugins>
       <plugin>

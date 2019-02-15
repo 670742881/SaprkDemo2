@@ -4,7 +4,9 @@ package com.spark.demo
 
   import java.net.URLDecoder
 
-  import com.spark.common.{EventLogConstants, LoggerUtil, Test, TimeUtil}
+  import com.spark.common.IP_parse.Test
+  import com.spark.common.{EventLogConstants, LoggerUtil, TimeUtil}
+  import com.spark.demo.utilS.SparkUtil
   import kafka.serializer.StringDecoder
   import org.apache.log4j.Logger
   import org.apache.spark.streaming.dstream.DStream
@@ -41,7 +43,8 @@ package com.spark.demo
         //
 
         //      })
-        .transform(rdd => {
+        .transform(rdd => {//        SparkUtil.LogPrase(rdd)
+
         rdd.map(log => {
           var map: Map[String, String] = new HashMap[String, String]
           val splits = log.split("\\^A")

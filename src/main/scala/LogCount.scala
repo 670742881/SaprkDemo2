@@ -1,6 +1,7 @@
 import java.net.URLDecoder
 
-import com.spark.common.{Test, TimeUtil}
+import com.spark.common.IP_parse.Test
+import com.spark.common.TimeUtil
 import com.spark.demo.HdfsUtil
 import com.spark.demo.SxRlStatDemo.logger
 import org.apache.spark.{SparkConf, SparkContext}

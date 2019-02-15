@@ -1,4 +1,7 @@
-package com.spark.common;
+package com.spark.common.IP_parse;
+
+import com.spark.common.IP_parse.IPv4FormatException;
+import com.spark.common.IP_parse.Util;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

@@ -3,7 +3,8 @@ package com.spark.demo
 import java.net.URLDecoder
 import java.sql.{Connection, DriverManager}
 
-import com.spark.common.{EventLogConstants, LoggerUtil, Test, TimeUtil}
+import com.spark.common.IP_parse.Test
+import com.spark.common.{EventLogConstants, TimeUtil}
 import kafka.serializer.StringDecoder
 import org.apache.hadoop.hbase.client.{ConnectionFactory, Put}
 import org.apache.hadoop.hbase.util.Bytes
@@ -17,7 +18,7 @@ import org.apache.spark.{SparkConf, SparkContext}
 import scala.collection.immutable.HashMap
 
 object SxRlStatDemo extends Serializable {
-  val logger = Logger.getLogger(classOf[LoggerUtil])
+  val logger = Logger.getLogger(classOf[Logger ])
   private val serialVersionUID = -4892194648703458595L
 
   def main(args: Array[String]): Unit = {
@@ -47,6 +48,7 @@ object SxRlStatDemo extends Serializable {
 
       //      })
       .transform(rdd => {
+//      SparkUtil.LogPrase(rdd)
       rdd.map(log => {
         var map: Map[String, String] = new HashMap[String, String]
         val splits = log.split("\\^A")
@@ -65,7 +67,7 @@ object SxRlStatDemo extends Serializable {
           for (e <- requestParames) {
             val index = e.indexOf("=")
             if (index < 1) {
-              logger.debug("次日志无法解析")
+              logger.debug(log+"次日志无法解析")
             }
             var key = ""; var value = "";
             key = e.substring(0, index)
@@ -77,7 +79,6 @@ object SxRlStatDemo extends Serializable {
         }
         map
       })
-
     })
     stream.cache()
     ssc.checkpoint("checkpoint")

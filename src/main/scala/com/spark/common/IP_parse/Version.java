@@ -1,4 +1,4 @@
-package com.spark.common;
+package com.spark.common.IP_parse;
 
 public class Version {
     public static String get() {

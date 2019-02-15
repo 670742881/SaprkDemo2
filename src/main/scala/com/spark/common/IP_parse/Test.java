@@ -1,4 +1,4 @@
-package com.spark.common;
+package com.spark.common.IP_parse;
 
 import java.io.IOException;
 import java.util.Arrays;

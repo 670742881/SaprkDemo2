@@ -2,12 +2,12 @@ package com.spark.SXlogStat
 
 import java.net.URLDecoder
 
-import com.spark.common.{EventLogConstants, Test, TimeUtil}
+import com.spark.common.IP_parse.Test
+import com.spark.common.{EventLogConstants, TimeUtil}
 import com.spark.demo.SxRlStatDemo.logger
 import org.apache.spark.{SparkConf, SparkContext}
 
 import scala.collection.immutable.HashMap
-import scala.collection.mutable
 
 
 object shixunLogStat {

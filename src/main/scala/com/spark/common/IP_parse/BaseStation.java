@@ -1,4 +1,6 @@
-package com.spark.common;
+package com.spark.common.IP_parse;
+
+import com.spark.common.IP_parse.District;
 
 import java.io.IOException;
 
