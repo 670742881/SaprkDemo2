@@ -117,22 +117,46 @@
       <version>2.7.6</version>
     </dependency>
 
+
+      <!--<dependency>-->
+          <!--<groupId>org.apache.hbase</groupId>-->
+          <!--<artifactId></artifactId>-->
+          <!--<version>0.98.2-hadoop2</version>-->
+      <!--</dependency>-->
+
+      <!--<dependency>-->
+          <!--<groupId>org.apache.hbase</groupId>-->
+          <!--<artifactId>hbase-client</artifactId>-->
+          <!--<version>0.98.2-hadoop2</version>-->
+      <!--</dependency>-->
+
+      <dependency>
+          <groupId>org.apache.hbase</groupId>
+          <artifactId>hbase-common</artifactId>
+          <version>1.2.0</version>
+      </dependency>
+
+      <dependency>
+          <groupId>org.apache.hbase</groupId>
+          <artifactId>hbase-server</artifactId>
+          <version>1.2.0</version>
+      </dependency>
   </dependencies>
 
 
   <build>
-    <!--<resources>-->
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
+        </includes>
+    </resource>
       <!--<resource>-->
-        <!--<directory>src/main/resources</directory>-->
-        <!--<includes>-->
-          <!--<include>**/*.properties</include>-->
-          <!--<include>**/*.xml</include>-->
-        <!--</includes>-->
+      <!--<directory>src/main/Resource</directory>-->
     <!--</resource>-->
-      <!--&lt;!&ndash;<resource>&ndash;&gt;-->
-      <!--&lt;!&ndash;<directory>src/main/Resource</directory>&ndash;&gt;-->
-    <!--&lt;!&ndash;</resource>&ndash;&gt;-->
-    <!--</resources>-->
+    </resources>
     <sourceDirectory>src/main/scala</sourceDirectory>
     <plugins>
       <plugin>
