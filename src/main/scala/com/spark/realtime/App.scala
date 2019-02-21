@@ -1,10 +1,7 @@
-package com.spark.demo
-
-import org.apache.spark.{SparkConf, SparkContext}
+package com.spark.realtime
 
 import scala.collection.immutable.HashMap
 import scala.collection.mutable
-import scala.util.Random
 
 /**
  * Hello world!

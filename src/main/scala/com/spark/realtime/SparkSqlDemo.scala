@@ -1,4 +1,4 @@
-package com.spark.demo
+package com.spark.realtime
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.streaming.dstream.DStream

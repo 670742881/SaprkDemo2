@@ -1,7 +1,7 @@
-package com.spark.demo
+package com.spark.realtime
 
 
-import com.spark.demo.utilS.SparkUtil
+import com.spark.realtime.utilS.SparkUtil
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
 

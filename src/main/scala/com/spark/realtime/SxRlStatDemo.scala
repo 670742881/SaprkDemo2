@@ -1,4 +1,4 @@
-package com.spark.demo
+package com.spark.realtime
 
 import java.net.URLDecoder
 import java.sql.{Connection, DriverManager}
@@ -279,6 +279,7 @@ object SxRlStatDemo extends Serializable {
       })
     })
     bc_personAmt.print()
+    bc_personAmt.saveAsHadoopFiles()
     ssc.start()
     ssc.awaitTermination() // 阻塞，等待程序的遇到中断等操作
 

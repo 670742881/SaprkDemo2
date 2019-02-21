@@ -1,4 +1,4 @@
-package com.spark.demo
+package com.spark.realtime
 
 
 
@@ -6,7 +6,7 @@ package com.spark.demo
 
   import com.spark.common.IP_parse.Test
   import com.spark.common.{EventLogConstants, LoggerUtil, TimeUtil}
-  import com.spark.demo.utilS.SparkUtil
+  import com.spark.realtime.utilS.SparkUtil
   import kafka.serializer.StringDecoder
   import org.apache.log4j.Logger
   import org.apache.spark.streaming.dstream.DStream

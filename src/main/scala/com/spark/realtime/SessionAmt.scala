@@ -1,15 +1,15 @@
-package com.spark.demo
+package com.spark.realtime
 
 
 
 import com.spark.common.TimeUtil
-import com.spark.demo.utilS.SparkUtil
+import com.spark.realtime.utilS.SparkUtil
 import org.apache.spark.rdd.RDD
 
 
 
 /**
-  * @created by imp ON 2019/2/14
+  * @created by imp ON 2018/2/14
   */
 object SessionAmt{
   def main(args: Array[String]): Unit = {

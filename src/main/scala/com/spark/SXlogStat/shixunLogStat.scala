@@ -1,13 +1,8 @@
 package com.spark.SXlogStat
 
-import java.net.URLDecoder
-
-import com.spark.common.IP_parse.Test
-import com.spark.common.{EventLogConstants, TimeUtil}
-import com.spark.demo.SxRlStatDemo.logger
+import com.spark.common.TimeUtil
+import com.spark.realtime.utilS.SparkUtil
 import org.apache.spark.{SparkConf, SparkContext}
-
-import scala.collection.immutable.HashMap
 
 
 object shixunLogStat {
@@ -22,40 +17,7 @@ object shixunLogStat {
     val text = sc.textFile("hdfs://hadoop01:8020/flume/nginxlogs/2019/01/28/access_logs.1548604802168")
     //    val set= mutable.HashSet[String]() //set放外面
     //    sc.broadcast(set)
-
-    val logMap = text.filter(line => line.contains("en=e_sx")).map(log => {
-      var map = new HashMap[String, String]
-      val splits = log.split("\\^A")
-      if (splits.length == 3) {
-        val ip = splits(0).trim
-        val nginxTime = TimeUtil.parseNginxServerTime2Long(splits(1).trim).toString;
-        if (nginxTime != "-1") {
-          nginxTime.toString
-        }
-        val requestStr = splits(2)
-        val index = requestStr.indexOf("?")
-        if (index > -1) { // 有请求参数的情况下，获取？后面的参数
-          val requestBody: String = requestStr.substring(index + 1)
-          var areaInfo = if (ip.nonEmpty) Test.getInfo(ip) else Array("un", "un", "un")
-          val requestParames = requestBody.split("&")
-          for (e <- requestParames) {
-            val index = e.indexOf("=")
-            if (index < 1) {
-              logger.debug("次日志无法解析")
-            }
-            var key = ""; var value = "";
-            key = e.substring(0, index)
-            value = URLDecoder.decode(e.substring(index + 1), EventLogConstants.LOG_PARAM_CHARSET)
-            map.+=(key -> value)
-          }
-          map.+=("ip" -> ip, "s_time" -> nginxTime, "country" -> areaInfo(0), "provence" -> areaInfo(1), "city" -> areaInfo(2))
-        } else {
-          logger.debug("次日志无法解析")
-        }
-      }
-      map
-    })
-
+    val logMap= SparkUtil.LogPrase(text);
     val audtorStat = logMap.
       filter(log => log.contains("bc_status") && log.contains("s_time") && log("bc_status") != "0" && log.contains("bc_person")
         && log("is_delete") == "0" && log("cr_cp_id") != "699004")

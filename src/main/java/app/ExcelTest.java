@@ -25,7 +25,7 @@
 // // 获取总列数  
 // int CountColumnNum = 5;
 //        XSSFWorkbook hwb = new XSSFWorkbook();  
-//        XSSFCellStyle style = hwb.createCellStyle();
+// XSSFCellStyle style = hwb.createCellStyle();
 //
 //
 //        style.setAlignment(XSSFCellStyle.ALIGN_CENTER);

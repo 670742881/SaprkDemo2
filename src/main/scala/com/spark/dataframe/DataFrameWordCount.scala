@@ -7,7 +7,7 @@ object DataFrameWordCount {
 
     val spark = SparkSession.builder().appName(this.getClass.getSimpleName).master("local").getOrCreate()
     import spark.implicits._
-    val linesDF = spark.sparkContext.textFile("data/WC.txt").toDF("line")
+    val linesDF = spark.sparkContext.textFile("data/*.txt").toDF("line")
     linesDF.show(false)
     linesDF.printSchema()
     //将一行数据展开

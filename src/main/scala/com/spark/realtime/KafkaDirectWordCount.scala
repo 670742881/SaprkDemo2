@@ -1,16 +1,15 @@
-package com.spark.demo
+package com.spark.realtime
 
 import java.util
 
 import com.spark.common.LoggerUtil
 import kafka.serializer.StringDecoder
-import org.apache.spark.streaming.dstream.DStream
 import org.apache.spark.streaming.kafka.KafkaUtils
 import org.apache.spark.streaming.{Seconds, StreamingContext}
 import org.apache.spark.{SparkConf, SparkContext}
 
 /**
-  * Created by hejunhon 10/23.  */
+  * Created by hejunhon 2018/01/23.  */
 object KafkaDirectWordCount {
   def main(args: Array[String]): Unit = {
     // 一、上下文构建

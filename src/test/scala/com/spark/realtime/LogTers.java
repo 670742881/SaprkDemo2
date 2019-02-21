@@ -1,4 +1,4 @@
-package com.spark.demo;
+package com.spark.realtime;
 
 import com.spark.common.LoggerUtil;
 

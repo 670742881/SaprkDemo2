@@ -1,10 +1,10 @@
-package com.spark.demo.utilS
+package com.spark.realtime.utilS
 
 import java.net.URLDecoder
 
 import com.spark.common.IP_parse.Test
 import com.spark.common.TimeUtil
-import com.spark.demo.SxRlStatDemo.logger
+import com.spark.realtime.SxRlStatDemo.logger
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.rdd.RDD
 

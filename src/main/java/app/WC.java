@@ -1,4 +1,9 @@
 package app;
 
-public class WC {
+public abstract  class WC {
+  public   void  st(){ }
+   abstract void s();
+  public static void a(){}
+  private static void a1(){};
+
 }
