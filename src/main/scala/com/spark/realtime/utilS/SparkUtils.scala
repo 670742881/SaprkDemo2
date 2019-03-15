@@ -14,7 +14,7 @@ import scala.collection.immutable.HashMap
 /**
   * @created by imp ON 2019/2/14
   */
-object SparkUtil {
+object SparkUtils {
 
   //1.日志解析方法
   def LogPrase(text:RDD[String]) ={

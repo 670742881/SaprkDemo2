@@ -1,7 +1,7 @@
 package com.spark.realtime
 
 
-import com.spark.realtime.utilS.SparkUtil
+import com.spark.realtime.utilS.SparkUtils
 import org.apache.spark.rdd.RDD
 import org.apache.spark.sql.SparkSession
 
@@ -30,7 +30,7 @@ object UserIdAnalyze {
     //        .map(_._2).sum()
 
     //log解析进行def
-   val log= SparkUtil.LogPrase(text);
+   val log= SparkUtils.LogPrase(text);
     val uuid= log.filter(log=>log.contains("userId")).map(log=>logFileName.substring(0,6)+"\t"+log("userId")).distinct().cache()
 //    uudi.repartition(1).saveAsTextFile("1")
     import spark.implicits._

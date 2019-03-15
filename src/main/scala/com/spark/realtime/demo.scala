@@ -6,10 +6,8 @@ package com.spark.realtime
 
   import com.spark.common.IP_parse.Test
   import com.spark.common.{EventLogConstants, LoggerUtil, TimeUtil}
-  import com.spark.realtime.utilS.SparkUtil
   import kafka.serializer.StringDecoder
   import org.apache.log4j.Logger
-  import org.apache.spark.streaming.dstream.DStream
   import org.apache.spark.streaming.kafka.KafkaUtils
   import org.apache.spark.streaming.{Seconds, StreamingContext}
   import org.apache.spark.{SparkConf, SparkContext}

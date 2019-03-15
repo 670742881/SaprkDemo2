@@ -3,7 +3,7 @@ package com.spark.realtime
 
 
 import com.spark.common.TimeUtil
-import com.spark.realtime.utilS.SparkUtil
+import com.spark.realtime.utilS.SparkUtils
 import org.apache.spark.rdd.RDD
 
 
@@ -15,18 +15,18 @@ object SessionAmt{
   def main(args: Array[String]): Unit = {
     val appName=this.getClass.getName
     val isLocal=true
-    val conf = SparkUtil.generateSparkConf(appName, isLocal, that => {
+    val conf = SparkUtils.generateSparkConf(appName, isLocal, that => {
       // 这里可以单独的指定当前spark应用的相关参数
       // nothings
       that.set("","")
     })
     // 2.3 SparkContext对象的构建
-    val sc = SparkUtil.getSparkContext(conf)
+    val sc = SparkUtils.getSparkContext(conf)
     //可单独写方法判断 读取hdfs的某一天文件夹下所以文件
     val  path="data/test"
     val text=sc.textFile(path)
     //使用解析日志方法
-    val log=SparkUtil.LogPrase(text)
+    val log=SparkUtils.LogPrase(text)
     log.cache()
 
     val sessionID2RecordsRDD: RDD[(String, Iterable[Map[String, String]])] =log.map(i=>(i("sessionId"),i)).groupByKey()

@@ -1,6 +1,7 @@
 package com.spark.realtime
 
 import java.net.URLDecoder
+import java.sql
 import java.sql.{Connection, DriverManager}
 
 import com.spark.common.IP_parse.Test
@@ -23,7 +24,8 @@ object SxRlStatDemo extends Serializable {
 
   def main(args: Array[String]): Unit = {
     val conf = new SparkConf()
-    conf.setMaster("local[2]").setAppName("sxdemo")
+    conf.setMaster("local[*]")
+      .setAppName("sxdemo")
       .set("spark.streaming.kafka.maxRatePerPartition", "100")
       .set("spark.streaming.backpressure.enabled", "true")
     //开启被压
@@ -42,7 +44,7 @@ object SxRlStatDemo extends Serializable {
     //      "spark.serializer"->"org.apache.spark.serializer.KryoSerializer")
     // 给定一个由topic名称组成的set集合
     val topics = Set("topic_bc")
-    val stream = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaParams, topics).map(_._2)
+    val stream = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc, kafkaParams, topics).map(_._2).repartition(10)
       //      .mapog => {
       //
 
@@ -103,9 +105,10 @@ object SxRlStatDemo extends Serializable {
         //state:Option[Long] 代表当前批次之前的所有批次的累计的结果，val对于wordcount而言就是先前所有批次中相同单词出现的总次数
         val preValue = state.getOrElse(0L)
         Some(currentValue + preValue)
-      }).transform(rdd => {
-      rdd.sortBy(_._2, false)
-    })
+      })
+//      .transform(rdd => {
+//      rdd.sortBy(_._2, false)
+//    })
     areaStartAmt.print()
 
 
@@ -162,129 +165,94 @@ object SxRlStatDemo extends Serializable {
     val password = "bigdata"
     Class.forName("com.mysql.jdbc.Driver")
     areaStartAmt.foreachRDD(rdd => {
-      rdd.foreachPartition(partitionOfRecords => {
+      rdd.foreachPartition(f = partitionOfRecords => {
         if (partitionOfRecords.isEmpty) {
           println("This RDD is not null but partition is null")
         } else {
-
-          //          Class.forName("com.mysql.jdbc.Driver")
-          //          var connection: Connection = null
-          //          try {
-          //            connection = DriverManager.getConnection(url, username, password)
-          //            connection.setAutoCommit(false)
-          //            val time = System.currentTimeMillis() / 1000
-          //            //  val sql = "insert into test (bc_person,amt)  values(?,?) ON DUPLICATE KEY UPDATE `amt`= ?"
-          //            val sql1 = "insert into area_user_amt (date,country,provence,amt)  values(?,?,?,?) ON DUPLICATE KEY UPDATE `amt`= ?"
-          //            //  val sql3 = "insert into area_user_amt (date,country,provence,amt)  values(?,?,?,?) "
-          //            val pstmt = connection.prepareStatement(sql1)
-          //            var count = 0
-          //            partitionOfRecords.foreach(record => {
-          //              //              pstmt.setString(1, record._1)
-          //              //              pstmt.setInt(2, record._2.toInt)
-          //              //              pstmt.setInt(3,  record._2.toInt)
-          //              val info = record._1.split("_")
-          //              //  if(info.length==3){
-          //              pstmt.setString(1, info(2))
-          //              pstmt.setString(2, info(0))
-          //              pstmt.setString(3, info(1))
-          //              pstmt.setInt(4, record._2.toInt)
-          //              pstmt.setInt(5, record._2.toInt)
-          //              pstmt.addBatch()
-          //              count += 1
-          //              if (count % 500 == 0) {
-          //                pstmt.executeBatch()
-          //                connection.commit()
-          //              }
-          //            })
-          //            pstmt.execute()
-          //            connection.commit()
-          //          } finally {
-          //            if (connection != null)
-          //              connection.close()
-          //          }
-
-          val connection = DriverManager.getConnection(url, username, password)
-          partitionOfRecords.foreach(record => {
-            var datekey = record._1.split("_")(2)
-            var countrykey = record._1.split("_")(0)
-            var provencekey = record._1.split("_")(1)
-            var amt = record._2
-            val sql1 = s"insert into area_user_amt (date,country,provence,amt)  values('${datekey}','${countrykey}','${provencekey}','${amt}') ON DUPLICATE KEY UPDATE `amt`= '${amt}'"
-            // val sql = s"select * from area_user_amt where date='${datekey}' and country='${countrykey}' and provence='${provencekey}'"
-            val stmt = connection.createStatement()
-            val code = stmt.executeUpdate(sql1)
-            //返回值
-            if (code < 0) {
-              println("更新失败")
-            }
-            else {
-//              println("更新成功")
-         }
-
-            //                      if (result.next()) {
-            //                        val date = result.getString("date")
-            //                        val country = result.getString("country")
-            //                        val provence = result.getString("provence")
-            //                        if (date + country + provence == datekey + countrykey + provencekey) {
-            //                          val updateSql = s"update area_user_amt set amt='${amt}' where date='${datekey}' and country='${countrykey}' and provence='${provencekey}'"
-            //                         val code=stmt.execute(updateSql)
-            //                          println(code)
-            //                        }
-            //                        else {
-            //                          var insertSql = s"insert into area_user_amt (date,country,provence,amt) values('${datekey}','${countrykey}','${provencekey}','${amt}')"
-            //                         val cone1= stmt.execute(insertSql)
-            //                          println(cone1)
-            //                        }
-          })
-        }
-      })
-    })
-
-    // areaStartAmt 插入数据
-    bc_personAmt.foreachRDD(rdd => {
-      rdd.foreachPartition(partitionOfRecords => {
-        if (partitionOfRecords.isEmpty) {
-          println("This RDD is not null but partition is null")
-        } else {
-
-          Class.forName("com.mysql.jdbc.Driver")
           var connection: Connection = null
+          var pstmt: sql.Statement = null
+          var sql1: String = null
           try {
             connection = DriverManager.getConnection(url, username, password)
-            connection.setAutoCommit(false)
-            val time = System.currentTimeMillis() / 1000
-            val sql = "insert into test (bc_person,amt)  values(?,?) ON DUPLICATE KEY UPDATE `amt`= ?"
-            val pstmt = connection.prepareStatement(sql)
-            var count = 0
+//       connection.setAutoCommit(false)
             partitionOfRecords.foreach(record => {
-              pstmt.setString(1, record._1)
-              pstmt.setInt(2, record._2.toInt)
-              pstmt.setInt(3, record._2.toInt)
-              pstmt.addBatch()
-              count += 1
-              System.err.print(count)
-              if (count % 500 == 0) {
-                pstmt.executeBatch()
-                connection.commit()
-              }
+              var datekey = record._1.split("_")(2)
+              var countrykey = record._1.split("_")(0)
+              var provencekey = record._1.split("_")(1)
+              var count = 0
+              var amt = record._2
+              sql1 = s"insert into area_user_amt (date,country,provence,amt)  values('${datekey}','${countrykey}','${provencekey}','${amt}') ON DUPLICATE KEY UPDATE `amt`= '${amt}'"
+              // val sql = s"select * from area_user_amt where date='${datekey}' and country='${countrykey}' and provence='${provencekey}'"
+              pstmt = connection.createStatement()
+              val code = pstmt.executeUpdate(sql1)
+              if (code != -1) println("跟新成功") else println("失败")
+//                              count += 1
+//                              if (count % 50 == 0) {
+//                                pstmt.executeBatch()
+//                                connection.commit()
+//                              }
             })
-            pstmt.execute()
-            connection.commit()
           } finally {
-            if (connection != null)
-              connection.close()
-          }
+//                    pstmt.execute(sql1)
+//                     connection.commit()
+                        if (connection != null)
+                          connection.close()
+                      }
+           }
 
-        }
       })
     })
-    bc_personAmt.print()
-    bc_personAmt.saveAsHadoopFiles()
-    ssc.start()
-    ssc.awaitTermination() // 阻塞，等待程序的遇到中断等操作
 
-    // 七、关闭sparkstreaming的程序运行
-    ssc.stop()
-  }
+
+      // areaStartAmt 插入数据
+      //    bc_personAmt.foreachRDD(rdd => {
+      //      rdd.foreachPartition(partitionOfRecords => {
+      //        if (partitionOfRecords.isEmpty) {
+      //          println("This RDD is not null but partition is null")
+      //        } else {
+      //
+      //          Class.forName("com.mysql.jdbc.Driver")
+      //          var connection: Connection = null
+      //          try {
+      //            connection = DriverManager.getConnection(url, username, password)
+      //            connection.setAutoCommit(false)
+      //            val time = System.currentTimeMillis() / 1000
+      //            val sql = "insert into test (bc_person,amt)  values(?,?) ON DUPLICATE KEY UPDATE `amt`= ?"
+      //            val pstmt = connection.prepareStatement(sql)
+      //            var count = 0
+      //            partitionOfRecords.foreach(record => {
+      //              pstmt.setString(1, record._1)
+      //              pstmt.setInt(2, record._2.toInt)
+      //              pstmt.setInt(3, record._2.toInt)
+      //              pstmt.addBatch()
+      //
+      //              System.err.print(count)
+      //              if (count % 500 == 0) {
+      //                pstmt.executeBatch()
+      //                connection.commit()
+      //              }
+      //            })
+      //            pstmt.execute()
+      //            connection.commit()
+      //          } finally {
+      //            if (connection != null)
+      //              connection.close()
+      //          }
+      //
+      //        }
+      //      })
+      //    })
+
+
+      bc_personAmt.print()
+      //    bc_personAmt
+
+      ssc.start()
+      ssc.awaitTermination() // 阻塞，等待程序的遇到中断等操作
+
+      // 七、关闭sparkstreaming的程序运行
+      ssc.stop()
+      }
+
 }
 

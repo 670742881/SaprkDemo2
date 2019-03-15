@@ -1,7 +1,8 @@
 package com.spark.SXlogStat
 
+
 import com.spark.common.TimeUtil
-import com.spark.realtime.utilS.SparkUtil
+import com.spark.realtime.utilS.SparkUtils
 import org.apache.spark.{SparkConf, SparkContext}
 
 
@@ -17,7 +18,7 @@ object shixunLogStat {
     val text = sc.textFile("hdfs://hadoop01:8020/flume/nginxlogs/2019/01/28/access_logs.1548604802168")
     //    val set= mutable.HashSet[String]() //set放外面
     //    sc.broadcast(set)
-    val logMap= SparkUtil.LogPrase(text);
+    val logMap= SparkUtils.LogPrase(text);
     val audtorStat = logMap.
       filter(log => log.contains("bc_status") && log.contains("s_time") && log("bc_status") != "0" && log.contains("bc_person")
         && log("is_delete") == "0" && log("cr_cp_id") != "699004")
